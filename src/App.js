@@ -1,20 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import * as dates from "./utils/dates";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./App.css";
 
 const localizer = momentLocalizer(moment);
-const myEventsList = [
-  {
-    id: 1,
-    title: 62.5,
-    start: new Date(2024, 8, 27),
-    end: new Date(2024, 8, 27),
-  },
-];
 
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
@@ -34,22 +27,33 @@ const CustomEvent = ({ event }) => {
   return <div style={eventStyle}>{event.title}</div>;
 };
 
-const customSlotPropGetter = (date) => {
-  if (date.getDate() === 7 || date.getDate() === 15)
-    return {
-      // className: styles.specialDay,
-    };
-  else return {};
-};
-
 function App() {
-  const { components, defaultDate, max, views } = useMemo(
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_SERVER_BASE_URI}/get_recommendations/past_month`
+    )
+      .then((response) => response.json())
+      .then((data) =>
+        setEvents(
+          data.map((datum, index) => ({
+            id: index,
+            title: datum.score,
+            start: new Date(datum.date),
+            end: new Date(datum.date),
+          }))
+        )
+      )
+      .catch((error) => console.error("Error fetching events:", error));
+  }, []);
+
+  const { components, max, views } = useMemo(
     () => ({
       components: {
         timeSlotWrapper: ColoredDateCellWrapper,
         event: CustomEvent,
       },
-      defaultDate: new Date(2015, 3, 1),
       max: dates.add(dates.endOf(new Date(2015, 17, 1), "day"), -1, "hours"),
       views: Object.keys(Views).map((k) => Views[k]),
     }),
@@ -60,16 +64,14 @@ function App() {
     <div className="App">
       <Calendar
         components={components}
-        defaultDate={defaultDate}
-        events={myEventsList}
+        events={events}
         localizer={localizer}
         max={max}
         showMultiDayTimes
         step={60}
         views={views}
-        defaultView={Views.AGENDA}
-        slotPropGetter={customSlotPropGetter}
-        style={{ height: 500, width: "50%" }}
+        defaultView={Views.MONTH}
+        style={{ height: "50%", width: "50%" }}
       />
     </div>
   );
