@@ -18,7 +18,7 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 const CustomEvent = ({ event }) => {
   const eventStyle = {
-    backgroundColor: event.title > 60 ? "green" : "red",
+    backgroundColor: event.score > 60 ? "green" : "red",
     color: "white",
     borderRadius: "5px",
     padding: "2px 5px",
@@ -39,9 +39,10 @@ function App() {
         setEvents(
           data.map((datum, index) => ({
             id: index,
-            title: datum.score,
-            start: new Date(datum.date),
-            end: new Date(datum.date),
+            score: datum.score,
+            title: `${datum.score >= 60 ? "Yes" : "No"} (${datum.score})`,
+            start: `${datum.date}:00:00:00`,
+            end: `${datum.date}:23:59:59`,
           }))
         )
       )
