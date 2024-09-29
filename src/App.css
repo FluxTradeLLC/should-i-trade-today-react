@@ -6,3 +6,59 @@
   align-items: center;
   justify-content: center;
 }
+
+:root {
+  --bg-color: #fff;
+  --text-color: #000;
+  --event-bg-color: #eee;
+}
+
+.dark-mode {
+  --bg-color: #222;
+  --text-color: #fff;
+  --event-bg-color: #444;
+}
+
+.rbc-calendar,
+.App,
+.rbc-btn-group button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.rbc-btn-group button.rbc-active {
+  background-color: var(--event-bg-color);
+}
+
+.rbc-event {
+  background-color: var(--event-bg-color);
+}
+
+.rbc-off-range-bg {
+  background-color: #000;
+}
+
+.rbc-today {
+  background-color: #ddd;
+  color: #000;
+}
+
+.rbc-current button {
+  color: black;
+}
+
+.weekend {
+  color: dodgerblue;
+}
+
+.yes {
+  color: green;
+}
+
+.no {
+  color: red;
+}
+
+h1 {
+  font-size: 5rem;
+}

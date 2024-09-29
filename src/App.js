@@ -73,14 +73,14 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <div className="App dark-mode">
       {isWeekend ? (
-        <h1>Enjoy the weekend!</h1>
+        <h1 className="weekend">Enjoy the weekend!</h1>
       ) : todaysEvent ? (
         todaysEvent.score >= 34 ? (
-          <h1>Go for it</h1>
+          <h1 className="yes">Go for it</h1>
         ) : (
-          <h1>Probably not</h1>
+          <h1 className="no">Probably not</h1>
         )
       ) : (
         <h1>No recommendation yet</h1>
@@ -94,7 +94,7 @@ function App() {
         step={60}
         views={views}
         defaultView={Views.MONTH}
-        style={{ height: "50%", width: "50%" }}
+        style={{ height: "100%", width: "100%" }}
       />
     </div>
   );
