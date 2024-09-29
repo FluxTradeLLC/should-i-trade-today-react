@@ -29,13 +29,16 @@ const CustomEvent = ({ event }) => {
 
 function App() {
   const [events, setEvents] = useState([]);
+  const [todaysDate, setTodaysDate] = useState(new Date().toISOString());
+  const [isWeekend, setIsWeekend] = useState(new Date().getDay() % 6 === 0);
+  const [todaysEvent, setTodaysEvent] = useState(null);
 
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_SERVER_BASE_URI}/get_recommendations/past_month`
     )
       .then((response) => response.json())
-      .then((data) =>
+      .then((data) => {
         setEvents(
           data.map((datum, index) => ({
             id: index,
@@ -44,10 +47,19 @@ function App() {
             start: `${datum.date}:00:00:00`,
             end: `${datum.date}:23:59:59`,
           }))
-        )
-      )
+        );
+      })
       .catch((error) => console.error("Error fetching events:", error));
   }, []);
+
+  useEffect(() => {
+    const todaysEvent = events.filter(
+      (event) =>
+        new Date(event.start).toISOString().split("T")[0] ===
+        new Date(todaysDate).toISOString().split("T")[0]
+    );
+    setTodaysEvent(todaysEvent?.[0] || null);
+  }, [events, todaysDate]);
 
   const { components, max, views } = useMemo(
     () => ({
@@ -62,6 +74,17 @@ function App() {
 
   return (
     <div className="App">
+      {isWeekend ? (
+        <h1>Enjoy the weekend!</h1>
+      ) : todaysEvent ? (
+        todaysEvent.score >= 34 ? (
+          <h1>Go for it</h1>
+        ) : (
+          <h1>Probably not</h1>
+        )
+      ) : (
+        <h1>No recommendation yet</h1>
+      )}
       <Calendar
         components={components}
         events={events}
