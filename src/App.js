@@ -18,7 +18,7 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 const CustomEvent = ({ event }) => {
   const eventStyle = {
-    backgroundColor: event.score > 60 ? "green" : "red",
+    backgroundColor: event.score > 54.5 ? "green" : "red",
     color: "white",
     borderRadius: "5px",
     padding: "2px 5px",
@@ -40,7 +40,7 @@ function App() {
           data.map((datum, index) => ({
             id: index,
             score: datum.score,
-            title: `${datum.score >= 60 ? "Yes" : "No"} (${datum.score})`,
+            title: `${datum.score >= 54.5 ? "Yes" : "No"} (${datum.score})`,
             start: `${datum.date}:00:00:00`,
             end: `${datum.date}:23:59:59`,
           }))
@@ -55,7 +55,6 @@ function App() {
         timeSlotWrapper: ColoredDateCellWrapper,
         event: CustomEvent,
       },
-      max: dates.add(dates.endOf(new Date(2015, 17, 1), "day"), -1, "hours"),
       views: Object.keys(Views).map((k) => Views[k]),
     }),
     []
