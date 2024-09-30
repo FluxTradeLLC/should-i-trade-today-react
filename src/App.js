@@ -53,10 +53,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const todaysEvent = events.filter(
+    const todaysEvent = events?.filter(
       (event) =>
-        new Date(event.start).toISOString().split("T")[0] ===
-        new Date(todaysDate).toISOString().split("T")[0]
+        new Date(event.start)?.toISOString().split("T")[0] ===
+        new Date(todaysDate)?.toISOString().split("T")[0]
     );
     setTodaysEvent(todaysEvent?.[0] || null);
   }, [events, todaysDate]);
