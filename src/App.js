@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useState } from "react";
 
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
-import * as dates from "./utils/dates";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./App.css";
@@ -29,7 +28,7 @@ const CustomEvent = ({ event }) => {
 
 function App() {
   const [events, setEvents] = useState([]);
-  const [todaysDate, setTodaysDate] = useState(new Date().toISOString());
+  const [todaysDate, setTodaysDate] = useState(new Date());
   const [isWeekend, setIsWeekend] = useState(new Date().getDay() % 6 === 0);
   const [todaysEvent, setTodaysEvent] = useState(null);
 
@@ -44,8 +43,8 @@ function App() {
             id: index,
             score: datum.score,
             title: `${datum.score >= 34 ? "Yes" : "No"} (${datum.score})`,
-            start: `${datum.date}:00:00:00`,
-            end: `${datum.date}:23:59:59`,
+            start: moment(datum.date).toDate(),
+            end: moment(datum.date).endOf("day").toDate(),
           }))
         );
       })
@@ -53,11 +52,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const todaysEvent = events?.filter(
-      (event) =>
-        new Date(event.start)?.toISOString().split("T")[0] ===
-        new Date(todaysDate)?.toISOString().split("T")[0]
-    );
+    const todaysEvent = events?.filter((event) => {
+      if (event?.start) {
+        const eventDate = new Date(event.start);
+        if (!isNaN(eventDate.getTime())) {
+          return (
+            eventDate.toISOString().split("T")[0] ===
+            new Date().toISOString().split("T")[0]
+          );
+        }
+      }
+      return false;
+    });
     setTodaysEvent(todaysEvent?.[0] || null);
   }, [events, todaysDate]);
 
