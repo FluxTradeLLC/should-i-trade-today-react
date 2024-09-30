@@ -47,6 +47,10 @@
   color: black;
 }
 
+.rbc-event {
+  background-color: transparent;
+}
+
 .weekend {
   color: dodgerblue;
 }
