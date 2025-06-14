@@ -59,12 +59,17 @@
   color: green;
 }
 
+.maybe {
+  color: rgba(255, 255, 0, 0.647);
+}
+
 .no {
-  color: red;
+  color: rgba(255, 0, 0, 0.734);
 }
 
 .weekend,
 .yes,
+.maybe,
 .no {
   text-align: center;
 }

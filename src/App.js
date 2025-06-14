@@ -17,8 +17,8 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 const CustomEvent = ({ event }) => {
   const eventStyle = {
-    backgroundColor: event.score > 34 ? "green" : "red",
-    color: "white",
+    backgroundColor: event.score > 65 ? event.score < 80 ? "yellow" : "darkgreen" : "darkred",
+    color: event.score < 80 && event.score >= 70 ? "black" : "white",
     borderRadius: "5px",
     padding: "2px 5px",
   };
@@ -42,7 +42,7 @@ function App() {
           data.map((datum, index) => ({
             id: index,
             score: datum.score,
-            title: `${datum.score >= 34 ? "Yes" : "No"} (${datum.score})`,
+            title: `${datum.score > 65 ? datum.score < 80 ? "cautious yes" : "yes" : "no"} (${datum.score})`,
             start: moment.utc(datum.date).endOf("day").toDate(),
             end: moment.utc(datum.date).endOf("day").toDate(),
           }))
@@ -79,12 +79,15 @@ function App() {
   return (
     <div className="App dark-mode">
       {isWeekend ? (
-        <h1 className="weekend">Enjoy the weekend!</h1>
+        <h1 className="weekend">enjoy the weekend!</h1>
       ) : todaysEvent ? (
-        todaysEvent.score >= 34 ? (
-          <h1 className="yes">Go for it</h1>
-        ) : (
-          <h1 className="no">Probably not</h1>
+        todaysEvent.score >= 80 ? (
+          <h1 className="yes">go for it</h1>
+        ) : 
+          todaysEvent.score >= 70 ?
+        ( <h1 className="maybe">proceed with caution</h1> ) 
+        : (
+          <h1 className="no">probably not</h1>
         )
       ) : (
         <h1>No recommendation yet</h1>
