@@ -43,8 +43,8 @@ function App() {
             id: index,
             score: datum.score,
             title: `${datum.score >= 34 ? "Yes" : "No"} (${datum.score})`,
-            start: moment(datum.date).toDate(),
-            end: moment(datum.date).endOf("day").toDate(),
+            start: moment.utc(datum.date).endOf("day").toDate(),
+            end: moment.utc(datum.date).endOf("day").toDate(),
           }))
         );
       })
@@ -52,14 +52,12 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const todayUTC = moment.utc().format("YYYY-MM-DD");
     const todaysEvent = events?.filter((event) => {
       if (event?.start) {
-        const eventDate = new Date(event.start);
-        if (!isNaN(eventDate.getTime())) {
-          return (
-            eventDate.toISOString().split("T")[0] ===
-            new Date().toISOString().split("T")[0]
-          );
+        const eventDate = moment.utc(event.start);
+        if (eventDate.isValid()) {
+          return eventDate.format("YYYY-MM-DD") === todayUTC;
         }
       }
       return false;
