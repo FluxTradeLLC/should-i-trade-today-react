@@ -17,8 +17,6 @@ const ColoredDateCellWrapper = ({ children }) =>
   });
 
 const CustomEvent = ({ event }) => {
-  const [showModal, setShowModal] = useState(false);
-
   const eventStyle = {
     backgroundColor: event.score > 65 ? event.score < 80 ? "yellow" : "darkgreen" : "darkred",
     color: event.score < 80 && event.score >= 70 ? "black" : "white",
@@ -38,105 +36,10 @@ const CustomEvent = ({ event }) => {
     opacity: 0.8,
   };
 
-  const modalOverlayStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 9999,
-  };
-
-  const modalStyle = {
-    backgroundColor: "white",
-    padding: "20px",
-    borderRadius: "8px",
-    maxWidth: "500px",
-    width: "90%",
-    maxHeight: "80vh",
-    overflow: "auto",
-    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-  };
-
-  const modalHeaderStyle = {
-    borderBottom: "1px solid #eee",
-    paddingBottom: "10px",
-    marginBottom: "15px",
-  };
-
-  const modalTitleStyle = {
-    fontSize: "18px",
-    fontWeight: "bold",
-    margin: "0 0 5px 0",
-    color: "#333",
-  };
-
-  const modalDateStyle = {
-    fontSize: "14px",
-    color: "#666",
-    margin: 0,
-  };
-
-  const modalContentStyle = {
-    fontSize: "14px",
-    lineHeight: "1.6",
-    color: "#333",
-    whiteSpace: "pre-wrap",
-  };
-
-  const closeButtonStyle = {
-    position: "absolute",
-    top: "10px",
-    right: "15px",
-    background: "none",
-    border: "none",
-    fontSize: "20px",
-    cursor: "pointer",
-    color: "#666",
-  };
-
   return (
-    <>
-      <div style={eventStyle}>
-        <span>{event.title}</span>
-        {event.summary && (
-          <span
-            style={infoIconStyle}
-            onClick={() => setShowModal(true)}
-            title="Click for details"
-          >
-            ℹ️
-          </span>
-        )}
-      </div>
-      
-      {showModal && event.summary && ReactDOM.createPortal(
-        <div style={modalOverlayStyle} onClick={() => setShowModal(false)}>
-          <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
-            <button 
-              style={closeButtonStyle}
-              onClick={() => setShowModal(false)}
-            >
-              ×
-            </button>
-            <div style={modalHeaderStyle}>
-              <h3 style={modalTitleStyle}>Trading Recommendation</h3>
-              <p style={modalDateStyle}>
-                {moment(event.start).format('dddd, MMMM Do, YYYY')}
-              </p>
-            </div>
-            <div style={modalContentStyle}>
-              {event.summary}
-            </div>
-          </div>
-        </div>,
-        document.getElementById("modal-root")
-      )}
-    </>
+    <div style={eventStyle}>
+      <span>{event.title}</span>
+    </div>
   );
 };
 
@@ -146,6 +49,7 @@ function App() {
   const [isWeekend] = useState(new Date().getDay() % 6 === 0);
   const [todaysEvent, setTodaysEvent] = useState(null);
   const [showTodayModal, setShowTodayModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     fetch(
@@ -312,6 +216,9 @@ function App() {
                 {moment(todaysEvent.start).format('dddd, MMMM Do, YYYY')}
               </p>
             </div>
+            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: "black" }}>
+              {todaysEvent.score >= 80 ? 'yes' : todaysEvent.score >= 70 ? 'cautious yes' : 'probably not'}
+            </div>
             <div style={modalContentStyle}>
               {todaysEvent.summary}
             </div>
@@ -329,7 +236,32 @@ function App() {
         views={views}
         defaultView={Views.MONTH}
         style={{ height: "100%", width: "100%" }}
+        onSelectEvent={(event) => setSelectedEvent(event)}
       />
+      {selectedEvent && selectedEvent.summary && (
+        <div style={modalOverlayStyle} onClick={() => setSelectedEvent(null)}>
+          <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+            <button 
+              style={closeButtonStyle}
+              onClick={() => setSelectedEvent(null)}
+            >
+              ×
+            </button>
+            <div style={modalHeaderStyle}>
+              <h3 style={modalTitleStyle}>Trading Recommendation</h3>
+              <p style={modalDateStyle}>
+                {moment(selectedEvent.start).format('dddd, MMMM Do, YYYY')}
+              </p>
+            </div>
+            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: "black" }}>
+              {selectedEvent.score >= 80 ? 'yes' : selectedEvent.score >= 70 ? 'cautious yes' : 'probably not'}
+            </div>
+            <div style={modalContentStyle}>
+              {selectedEvent.summary}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
