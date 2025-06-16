@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
