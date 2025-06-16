@@ -29,13 +29,6 @@ const CustomEvent = ({ event }) => {
     zIndex: 2
   };
 
-  const infoIconStyle = {
-    cursor: "pointer",
-    fontSize: "12px",
-    marginLeft: "4px",
-    opacity: 0.8,
-  };
-
   return (
     <div style={eventStyle}>
       <span>{event.title}</span>
@@ -110,18 +103,20 @@ function App() {
   };
 
   const modalStyle = {
-    backgroundColor: "white",
+    backgroundColor: "#23272f",
     padding: "20px",
     borderRadius: "8px",
     maxWidth: "500px",
     width: "90%",
     maxHeight: "80vh",
     overflow: "auto",
-    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.7)",
+    color: "#f1f1f1",
+    position: "relative"
   };
 
   const modalHeaderStyle = {
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px solid #444",
     paddingBottom: "10px",
     marginBottom: "15px",
   };
@@ -130,19 +125,19 @@ function App() {
     fontSize: "18px",
     fontWeight: "bold",
     margin: "0 0 5px 0",
-    color: "#333",
+    color: "#f1f1f1",
   };
 
   const modalDateStyle = {
     fontSize: "14px",
-    color: "#666",
+    color: "#aaa",
     margin: 0,
   };
 
   const modalContentStyle = {
     fontSize: "14px",
     lineHeight: "1.6",
-    color: "#333",
+    color: "#f1f1f1",
     whiteSpace: "pre-wrap",
   };
 
@@ -154,7 +149,8 @@ function App() {
     border: "none",
     fontSize: "20px",
     cursor: "pointer",
-    color: "#666",
+    color: "#aaa",
+    transition: "color 0.2s",
   };
 
   const infoIconStyle = {
@@ -216,7 +212,7 @@ function App() {
                 {moment(todaysEvent.start).format('dddd, MMMM Do, YYYY')}
               </p>
             </div>
-            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: "black" }}>
+            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: todaysEvent.score >= 80 ? 'green' : todaysEvent.score >= 70 ? 'yellow' : 'red' }}>
               {todaysEvent.score >= 80 ? 'yes' : todaysEvent.score >= 70 ? 'cautious yes' : 'probably not'}
             </div>
             <div style={modalContentStyle}>
@@ -253,7 +249,7 @@ function App() {
                 {moment(selectedEvent.start).format('dddd, MMMM Do, YYYY')}
               </p>
             </div>
-            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: "black" }}>
+            <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: selectedEvent.score >= 80 ? 'green' : selectedEvent.score >= 70 ? 'yellow' : 'red' }}>
               {selectedEvent.score >= 80 ? 'yes' : selectedEvent.score >= 70 ? 'cautious yes' : 'probably not'}
             </div>
             <div style={modalContentStyle}>
