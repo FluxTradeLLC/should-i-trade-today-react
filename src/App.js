@@ -182,7 +182,7 @@ function App() {
             todaysEvent.score >= 70 ?
           ( <h3 className="maybe">proceed with caution</h3> ) 
           : (
-            <h3 className="no">go for it</h3>
+            <h3 className="no">probably not</h3>
           )}
           {todaysEvent.summary && (
             <span
