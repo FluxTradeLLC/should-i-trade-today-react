@@ -214,7 +214,7 @@ function App() {
               </p>
             </div>
             <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: todaysEvent.score >= 80 ? 'green' : todaysEvent.score >= 70 ? 'yellow' : 'red' }}>
-              {todaysEvent.score >= 80 ? 'yes' : todaysEvent.score >= 70 ? 'cautious yes' : 'probably not'}
+              {todaysEvent.title}
             </div>
             <div style={modalContentStyle}>
               {todaysEvent.summary}
@@ -251,7 +251,7 @@ function App() {
               </p>
             </div>
             <div style={{ fontWeight: 'bold', fontSize: '1.2em', marginBottom: 10, color: selectedEvent.score >= 80 ? 'green' : selectedEvent.score >= 70 ? 'yellow' : 'red' }}>
-              {selectedEvent.score >= 80 ? 'yes' : selectedEvent.score >= 70 ? 'cautious yes' : 'probably not'}
+              {selectedEvent.title}
             </div>
             <div style={modalContentStyle}>
               {selectedEvent.summary}
