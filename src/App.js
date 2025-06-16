@@ -165,23 +165,25 @@ function App() {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    height: "100px",
+    fontSize: "30px"
   };
 
   return (
     <div className="App dark-mode">
       {isWeekend ? (
         <div style={titleContainerStyle}>
-          <h1 className="weekend">enjoy the weekend!</h1>
+          <h3 className="weekend">enjoy the weekend!</h3>
         </div>
       ) : todaysEvent ? (
         <div style={titleContainerStyle}>
           {todaysEvent.score >= 80 ? (
-            <h1 className="yes">go for it</h1>
+            <h3 className="yes">go for it</h3>
           ) : 
             todaysEvent.score >= 70 ?
-          ( <h1 className="maybe">proceed with caution</h1> ) 
+          ( <h3 className="maybe">proceed with caution</h3> ) 
           : (
-            <h1 className="no">probably not</h1>
+            <h3 className="no">go for it</h3>
           )}
           {todaysEvent.summary && (
             <span
@@ -194,7 +196,7 @@ function App() {
           )}
         </div>
       ) : (
-        <h1>No recommendation yet</h1>
+        <h3>no recommendation yet</h3>
       )}
       
       {showTodayModal && todaysEvent?.summary && (
