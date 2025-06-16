@@ -38,6 +38,10 @@
   background-color: #000;
 }
 
+.rbc-row {
+  z-index: 10;
+}
+
 .rbc-today {
   background-color: #ddd;
   color: #000;
