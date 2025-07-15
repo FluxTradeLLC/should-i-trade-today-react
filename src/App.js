@@ -259,6 +259,7 @@ function App() {
           </div>
         </div>
       )}
+      <p className="text-center mt-12">Copyright &copy; {new Date().getFullYear()}, <a href="https://fluxtrade.net" target="_blank" rel="noopener noreferrer" style={{ color: "white" }}>FluxTrade, LLC</a>. All rights reserved.</p>
     </div>
   );
 }
