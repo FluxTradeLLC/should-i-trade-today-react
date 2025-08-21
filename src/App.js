@@ -130,6 +130,18 @@ function App() {
       .catch((error) => console.error("Error fetching events:", error));
   }, []);
 
+  // Close modals on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        if (showTodayModal) setShowTodayModal(false);
+        if (selectedEvent) setSelectedEvent(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showTodayModal, selectedEvent]);
+
   useEffect(() => {
     const todayUTC = moment.utc().format("YYYY-MM-DD");
     const todaysEvent = events?.filter((event) => {

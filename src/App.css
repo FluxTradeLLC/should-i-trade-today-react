@@ -55,6 +55,29 @@
   background-color: transparent;
 }
 
+/* Remove blue focus rings/borders on calendar elements and align outlines with score color */
+.rbc-event:focus,
+.rbc-event:active,
+.rbc-day-bg:focus,
+.rbc-day-bg:active,
+.rbc-slot-selection,
+.rbc-selected,
+.rbc-show-more:focus,
+.rbc-show-more:active,
+.rbc-button-link:focus,
+.rbc-button-link:active,
+.rbc-toolbar button:focus,
+.rbc-toolbar button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Optional: ensure buttons don't show default blue border */
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .weekend {
   color: dodgerblue;
 }
