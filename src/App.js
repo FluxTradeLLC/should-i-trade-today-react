@@ -42,6 +42,16 @@ const impactToColor = (impact) => {
   }
 };
 
+// Remove asterisks and numeric citations like [5] from text
+const sanitizeText = (value) => {
+  if (typeof value !== "string") return "";
+  return value
+    .replaceAll("*", "")
+    .replace(/\s*\[\d+\]\s*/g, "")
+    .replace(/\s{2,}/g, "")
+    .trim();
+};
+
 const CustomEvent = ({ event }) => {
   const eventStyle = {
     backgroundColor: event.score > 65 ? event.score < 80 ? "yellow" : "darkgreen" : "darkred",
@@ -115,10 +125,10 @@ function App() {
             id: index,
             score: datum.score,
             title: `${datum.score > 65 ? datum.score < 80 ? "cautious yes" : "yes" : "no"} (${datum.score})`,
-            summary: datum.summary?.replaceAll("*", ""),
+            summary: sanitizeText(datum.summary || ""),
             regime: datum.regime,
-            supportingFactors: Array.isArray(datum.supporting_factors) ? datum.supporting_factors?.map(factor => factor?.replaceAll("*", "")) : [],
-            contradictoryFactors: Array.isArray(datum.contradictory_factors) ? datum.contradictory_factors?.map(factor => factor?.replaceAll("*", "")) : [],
+            supportingFactors: Array.isArray(datum.supporting_factors) ? datum.supporting_factors.map((factor) => sanitizeText(factor || "")) : [],
+            contradictoryFactors: Array.isArray(datum.contradictory_factors) ? datum.contradictory_factors.map((factor) => sanitizeText(factor || "")) : [],
             signalAccuracyRecent: typeof datum.signal_accuracy_recent === "number" ? datum.signal_accuracy_recent : null,
             econEvents: Array.isArray(datum.events) ? datum.events : [],
             numHighImpactEvents: typeof datum.num_high_impact_events === "number" ? datum.num_high_impact_events : null,
