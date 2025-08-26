@@ -358,8 +358,13 @@ function App() {
                       const { bg, color } = impactToColor(ev?.impact);
                       const label = formatTimeToAmPm(ev?.time_eastern);
                       return (
-                        <span key={`tev-${idx}`} title={ev?.description || ''} style={{ backgroundColor: bg, color, borderRadius: '9999px', padding: '2px 10px', fontSize: 12 }}>
-                          {label}
+                        <span key={`tev-${idx}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                          <span title={ev?.description || ''} style={{ backgroundColor: bg, color, borderRadius: '9999px', padding: '2px 10px', fontSize: 12 }}>
+                            {label}
+                          </span>
+                          {ev?.description && (
+                            <span style={{ fontSize: 12, color: '#ddd' }}>{ev.description}</span>
+                          )}
                         </span>
                       );
                     })}
@@ -451,8 +456,13 @@ function App() {
                       const { bg, color } = impactToColor(ev?.impact);
                       const label = formatTimeToAmPm(ev?.time_eastern);
                       return (
-                        <span key={`sev-${idx}`} title={ev?.description || ''} style={{ backgroundColor: bg, color, borderRadius: '9999px', padding: '2px 10px', fontSize: 12 }}>
-                          {label}
+                        <span key={`sev-${idx}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                          <span title={ev?.description || ''} style={{ backgroundColor: bg, color, borderRadius: '9999px', padding: '2px 10px', fontSize: 12 }}>
+                            {label}
+                          </span>
+                          {ev?.description && (
+                            <span style={{ fontSize: 12, color: '#ddd' }}>{ev.description}</span>
+                          )}
                         </span>
                       );
                     })}
