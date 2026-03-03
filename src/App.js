@@ -116,7 +116,7 @@ function App() {
 
   useEffect(() => {
     fetch(
-      `${process.env.REACT_APP_SERVER_BASE_URI}/api/shoulditrade/get_recommendations/past_month`
+      `${process.env.REACT_APP_SERVER_BASE_URI}/api/shoulditrade/get_recommendations/past_months`
     )
       .then((response) => response.json())
       .then((data) => {
